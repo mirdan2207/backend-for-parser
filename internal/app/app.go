@@ -6,6 +6,7 @@ import (
 	"testing_po/config"
 	"testing_po/internal/auth"
 	"testing_po/internal/database"
+	"testing_po/internal/parser"
 	"testing_po/internal/samples"
 
 	"github.com/gorilla/mux"
@@ -24,6 +25,7 @@ func New(cfg *config.Config) *App {
 
 	auth.RegisterRoutes(router, db)
 	samples.RegisterRoutes(router, db)
+	parser.RegisterRoutes(router)
 
 	return &App{
         Router: router,
