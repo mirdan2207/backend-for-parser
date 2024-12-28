@@ -10,6 +10,7 @@ import (
 	"testing_po/internal/samples"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 type App struct {
@@ -27,6 +28,14 @@ func New(cfg *config.Config) *App {
 	samples.RegisterRoutes(router, db)
 	parser.RegisterRoutes(router)
 
+	corsHandler := cors.New(cors.Options{
+		AllowedOrigins: []string{"*"}, // You can specify allowed origins here
+		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders: []string{"Content-Type", "Authorization"},
+	})
+
+	router.Use(corsHandler.Handler)
+	
 	return &App{
         Router: router,
         DB: db,
